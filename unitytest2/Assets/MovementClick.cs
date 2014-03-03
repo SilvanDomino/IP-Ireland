@@ -41,35 +41,39 @@ public class MovementClick : MonoBehaviour {
 			moveSpeed = 0;
 			isWorking = false;
 		}
-		else if(destinationDistance > 0.5f)
+		else if(destinationDistance > 0.1f)
 		{			
 			moveSpeed = 3;
 			isWorking = true;
+			isSelected = false;
 		}
 		
-		
-		if (Input.GetMouseButtonDown (0))
+		if (isWorking == false)
 		{
-			Plane playerPlane = new Plane(Vector3.up,trans.position);
-			Ray ray = usedCam.ScreenPointToRay(Input.mousePosition);
-			float hitdist = 0.0f;
-			
-			if(playerPlane.Raycast(ray, out hitdist))
+			if (Input.GetMouseButtonDown (0))
 			{
-				Vector3 targetPoint = ray.GetPoint(hitdist);
-				if((targetPoint.x > trans.position.x - trans.localScale.x && targetPoint.x < trans.position.x + trans.localScale.x) && (targetPoint.z > trans.position.z - trans.localScale.z && targetPoint.z < trans.position.z + trans.localScale.z) )
+				Plane playerPlane = new Plane(Vector3.up,trans.position);
+				Ray ray = usedCam.ScreenPointToRay(Input.mousePosition);
+				float hitdist = 0.0f;
+				
+				if(playerPlane.Raycast(ray, out hitdist))
 				{
-					Debug.Log("Poppetje geselecteerd");
-					isSelected = true;
-				}
-				else if(isSelected == true)
-				{
-					destinationPosition = ray.GetPoint(hitdist);
-					Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-					trans.rotation = targetRotation;
+					Vector3 targetPoint = ray.GetPoint(hitdist);
+					if((targetPoint.x > trans.position.x - trans.localScale.x && targetPoint.x < trans.position.x + trans.localScale.x) && (targetPoint.z > trans.position.z - trans.localScale.z && targetPoint.z < trans.position.z + trans.localScale.z) )
+					{
+						Debug.Log("Poppetje geselecteerd");
+						isSelected = true;
+					}
+					else if(isSelected == true)
+					{
+						destinationPosition = ray.GetPoint(hitdist);
+						Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
+						trans.rotation = targetRotation;
+					}
 				}
 			}
 		}
+
 		trans.position = Vector3.MoveTowards(trans.position, destinationPosition, moveSpeed * Time.deltaTime);		
 	}
 	
