@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MovementClick : MonoBehaviour {
 	Camera usedCam;
+	private bool isWorking;
 	private bool isSelected;
 	private Transform trans;
 	private Vector3 destinationPosition;
@@ -12,6 +13,7 @@ public class MovementClick : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		isSelected = false;
+		isWorking = false;
 		trans = transform;
 		destinationPosition = trans.position;
 		usedCam = GameObject.Find("Camera2").camera;
@@ -19,6 +21,14 @@ public class MovementClick : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (isWorking == false)
+		{
+			gameObject.renderer.material.color = Color.blue;
+		}
+		else
+		{
+			gameObject.renderer.material.color = Color.black;
+		}
 		if (Input.GetMouseButtonDown (1))
 		{
 			isSelected = false;
@@ -29,10 +39,12 @@ public class MovementClick : MonoBehaviour {
 		if(destinationDistance < 0.1f)
 		{		
 			moveSpeed = 0;
+			isWorking = false;
 		}
 		else if(destinationDistance > 0.5f)
 		{			
 			moveSpeed = 3;
+			isWorking = true;
 		}
 		
 		
