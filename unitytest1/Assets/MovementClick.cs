@@ -45,7 +45,7 @@ public class MovementClick : MonoBehaviour {
 			if(playerPlane.Raycast(ray, out hitdist))
 			{
 				Vector3 targetPoint = ray.GetPoint(hitdist);
-				if((targetPoint.x > trans.position.x - trans.localScale.x && targetPoint.x < trans.position.x) && (targetPoint.z > trans.position.z - trans.localScale.z && targetPoint.z < trans.position.z) )
+				if((targetPoint.x > trans.position.x - trans.localScale.x && targetPoint.x < trans.position.x + trans.localScale.x) && (targetPoint.z > trans.position.z - trans.localScale.z && targetPoint.z < trans.position.z + trans.localScale.z) )
 				{
 					Debug.Log("Poppetje geselecteerd");
 					isSelected = true;
