@@ -23,10 +23,30 @@ public class menutest : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		if (geklikt == true) {
-						if (GUI.Button (new Rect (1000, 30, 100, 70), "button")) {
-								Debug.Log ("geklikt op button");
+		if (enabled) {
+						if (geklikt == true) {
+								if (GUI.Button (new Rect (1400, 10, 200, 50), "Daily inspection")) {
+										Debug.Log ("geklikt op daily inspection");
+										enabled = false;
+										geklikt = false;
+								}
+								if (GUI.Button (new Rect (1400, 60, 200, 50), "Positioning onto ramp")) {
+										Debug.Log ("geklikt op positioning onto ramp");
+										enabled = false;
+										geklikt = false;
+								}
+								if (GUI.Button (new Rect (1400, 110, 200, 50), "Refuelling")) {
+										Debug.Log ("geklikt op refuelling");
+										enabled = false;
+										geklikt = false;
+								}
+								if (GUI.Button (new Rect (1400, 160, 200, 50), "Positioning into hangar")) {
+										Debug.Log ("geklikt op positioning into hangar");
+										enabled = false;
+										geklikt = false;
+								}
 						}
 				}
-	}
+		enabled = true;
+}
 }
