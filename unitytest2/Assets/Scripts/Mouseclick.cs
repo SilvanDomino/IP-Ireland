@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OnMouseDown : MonoBehaviour {
+public class Mouseclick : MonoBehaviour {
 	Camera usedCam;
 	Camera topcam;
 	GameObject[] cameras;
@@ -17,15 +17,15 @@ public class OnMouseDown : MonoBehaviour {
 	
 	}
 
-	void OnMouseOver(){
-		if (Input.GetMouseButtonDown (0)) {
+	void OnMouseDown(){
+		//if (Input.GetMouseButtonDown (0)) {
 						Debug.Log ("klik");
 			foreach (GameObject cams in cameras){
 				Camera theCam = cams.GetComponent<Camera>() as Camera;
 				theCam.enabled = false;
 			}  
 						usedCam.enabled = true;
-		}
+		//}
 	}
 
 
