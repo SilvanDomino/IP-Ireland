@@ -9,6 +9,7 @@ public class MovementClick : MonoBehaviour {
 	private Vector3 destinationPosition;
 	private float destinationDistance;
 	public float moveSpeed;	
+	bool geklikt = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -18,7 +19,35 @@ public class MovementClick : MonoBehaviour {
 		destinationPosition = trans.position;
 		usedCam = GameObject.Find("Camera2").camera;
 	}
-	
+
+	void OnGUI(){
+		if (enabled) {
+			if (geklikt == true) 
+			{
+				if (GUI.Button (new Rect (Screen.width - 200, 10, 200, 50), "Daily inspection")) {
+					Debug.Log ("geklikt op daily inspection");
+					enabled = false;
+					geklikt = false;
+				}           
+				if (GUI.Button (new Rect (Screen.width - 200, 60, 200, 50), "Positioning onto ramp")) {
+					Debug.Log ("geklikt op positioning onto ramp");
+					enabled = false;
+					geklikt = false;
+				}
+				if (GUI.Button (new Rect (Screen.width - 200, 110, 200, 50), "Refuelling")) {
+					Debug.Log ("geklikt op refuelling");
+					enabled = false;
+					geklikt = false;
+				}
+				if (GUI.Button (new Rect (Screen.width - 200, 160, 200, 50), "Positioning into hangar")) {
+					Debug.Log ("geklikt op positioning into hangar");
+					enabled = false;
+					geklikt = false;
+				}
+			}
+		}
+		enabled = true;
+	}
 	// Update is called once per frame
 	void Update () {
 		if (isWorking == false)
@@ -63,6 +92,7 @@ public class MovementClick : MonoBehaviour {
 					{
 						Debug.Log("Poppetje geselecteerd");
 						isSelected = true;
+						geklikt = true;
 					}
 					else if(isSelected == true)
 					{
