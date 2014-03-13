@@ -16,8 +16,8 @@ public class AirplaneSpawner : MonoBehaviour {
         schedule.Add(CreateNewScheduleItem());
         while (true)
         {
-            int a = UnityEngine.Random.Range(0, 4);
-            if (a > 2)
+            int a = UnityEngine.Random.Range(0, 3);
+            if (a < 2)
             {
                 schedule.Add(CreateNewScheduleItem());
             }
@@ -30,7 +30,7 @@ public class AirplaneSpawner : MonoBehaviour {
         UnityEngine.Random.seed = (int)((UnityEngine.Random.value * 100) + 3 * 2);
         string type = "Boeing 747";
         DateTime time = clock.time + new TimeSpan(UnityEngine.Random.Range(1, maxHoursNext), UnityEngine.Random.Range(1, 60), 0);
-        Vector3 pos = Vector3.zero;
+        Vector3 pos = new Vector3(0, 10, 0);
         return new PlaneScheduleObject(type, time, pos);
     }
 

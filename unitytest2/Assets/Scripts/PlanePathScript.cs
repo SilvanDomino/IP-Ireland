@@ -23,6 +23,7 @@ public class PlanePathScript : MonoBehaviour {
         lineRenderer.SetColors(Color.red, Color.blue);
         lineRenderer.SetWidth(2, 1f);
         lineRenderer.material = Resources.Load<Material>("Smoke1");
+        rigidbody.velocity += new Vector3(0.1f, 0, 0.1f);
     }
 
     void Update()
@@ -30,6 +31,8 @@ public class PlanePathScript : MonoBehaviour {
         if (isMovingAutoForward && !isLanding && !isLanded )
         {
             rigidbody.velocity = transform.forward*speed * 0.5f;
+            //transform.Translate(transform.forward * speed * 0.5f * Time.deltaTime);
+            //print("forward: " + transform.forward);
         }
         if (isLanding)
         {
