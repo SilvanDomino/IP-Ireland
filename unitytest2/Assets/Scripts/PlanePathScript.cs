@@ -13,6 +13,7 @@ public class PlanePathScript : MonoBehaviour {
     bool planeLanded            = false;
     bool isLanding              = false;
     bool isLanded               = false;
+    public GameObject explosion;
     float landTimer = 10;
     public float landTimerMax = 10;
 	void Start () {
@@ -90,12 +91,19 @@ public class PlanePathScript : MonoBehaviour {
         }
     }
 
+
     void OnTriggerEnter(Collider coll)
     {
         if (coll.tag == "LandingSpace")
         {
             isLanding = true;
             print("Trigger Entered: Start Landing");
+        }
+        if (coll.tag == "Airplane")
+        {
+            Destroy(Instantiate(explosion, transform.position, Quaternion.identity), 1.0f);
+            Destroy(this.gameObject, 0.2f);
+            print("explostion!");
         }
     }
 

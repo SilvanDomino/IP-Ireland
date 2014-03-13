@@ -16,12 +16,12 @@ public class AirplaneSpawner : MonoBehaviour {
         schedule.Add(CreateNewScheduleItem());
         while (true)
         {
-            int a = UnityEngine.Random.Range(0, 3);
-            if (a < 2)
+            int a = UnityEngine.Random.Range(0, 8);
+            if (a > 2)
             {
                 schedule.Add(CreateNewScheduleItem());
             }
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2);
         }
 	}
 
@@ -30,13 +30,21 @@ public class AirplaneSpawner : MonoBehaviour {
         UnityEngine.Random.seed = (int)((UnityEngine.Random.value * 100) + 3 * 2);
         string type = "Boeing 747";
         DateTime time = clock.time + new TimeSpan(UnityEngine.Random.Range(1, maxHoursNext), UnityEngine.Random.Range(1, 60), 0);
-        Vector3 pos = new Vector3(0, 10, 0);
-        return new PlaneScheduleObject(type, time, pos);
+        float a = 1- UnityEngine.Random.value * 2; UnityEngine.Random.seed += 3;
+        float b = 1- UnityEngine.Random.value *2;
+        Vector3 pos = new Vector3(a, 0, b);
+        float angle = Vector3.Angle(pos, new Vector3(0, 10, 0));
+        pos.Normalize();
+
+        Quaternion rot = Quaternion.Euler(0, angle, 0);
+        rot.y = angle;
+        pos *= 50;
+        pos.y = 10;
+        return new PlaneScheduleObject(type, time, pos,rot);
     }
 
     void Update()
     {
-        
         for (int i = 0; i < schedule.Count; i++)
         {
             //update every timer in the schedule
@@ -49,17 +57,14 @@ public class AirplaneSpawner : MonoBehaviour {
                 SpawnPlane(i);
             }
         }
-        
-
     }
 
     public void SpawnPlane(int index)
     {
         PlaneScheduleObject a = (PlaneScheduleObject)schedule[index];
         schedule.RemoveAt(index);
-
-        GameObject airplane = (GameObject)Instantiate(airPlanePrefab, a.spawnPos, Quaternion.identity);
-
+        GameObject airplane = (GameObject)Instantiate(airPlanePrefab, a.spawnPos, a.rotation);
+        print(a.rotation);
     }
     void OnGUI()
     {
@@ -69,8 +74,9 @@ public class AirplaneSpawner : MonoBehaviour {
             GUI.Label(new Rect(20, 80 + i * 30, 200, 25),a.PrintScheduleObject() );
             GUI.Label(new Rect(120, 80 + i * 30, 200, 25), a.span.ToString());
         }
-
     }
+
+
 }
 
 public class PlaneScheduleObject
@@ -79,11 +85,13 @@ public class PlaneScheduleObject
     public DateTime arriving;
     public Vector3 spawnPos = Vector3.zero;
     public TimeSpan span = new TimeSpan(0, 0, 0);
-    public PlaneScheduleObject(string type, DateTime arriving, Vector3 pos)
+    public Quaternion rotation = Quaternion.identity;
+    public PlaneScheduleObject(string type, DateTime arriving, Vector3 pos, Quaternion rot)
     {
         this.planeType = type;
         this.arriving = arriving;
         this.spawnPos = pos;
+        this.rotation = rot;
     }
     public string PrintScheduleObject()
     {
